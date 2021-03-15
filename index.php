@@ -1,7 +1,23 @@
 <?php
 include "header.php";
+echo "
+<ul class='navbar-nav'>
+<li class='nav-item active'>
+  <a class='nav-link' href='index.php'>Ana Sayfa</a>
+</li>
+<li class='nav-item'>
+  <a class='nav-link' href='mechanic.php'>Mekanik</a>
+</li>
+<li class='nav-item'>
+  <a class='nav-link' href='acces.php'>Aksesuar</a>
+</li>
+<li class='nav-item'>
+  <a class='nav-link' href='contact.php'>İletişim</a>
+</li>
+</ul>
+";
+include "header2.php";
 ?>
-
   <div class="container">
     <div class="row">
       <div class="col-xl-12 fa-border" style="border-color:rgba(0, 0, 0, 0.4);max-height:250px !important;border-top-width: 0px;border-radius:5px;">

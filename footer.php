@@ -39,14 +39,6 @@
     </div>
 </div>
         <!-- end footer -->
-        <!-- Core JavaScript
-        ================================================== -->
-        <script src="js/tether.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/parallax.js"></script>
-        <script src="js/animate.js"></script>
-        <script src="js/ekko-lightbox.js"></script>
-        <script src="js/custom.js"></script>
    </body>
 </html>
 

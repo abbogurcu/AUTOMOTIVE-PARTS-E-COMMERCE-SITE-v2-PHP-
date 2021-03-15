@@ -1,3 +1,9 @@
+<?php 
+  if(!isset($_SESSION)){session_start();}
+  if(!isset($_SESSION["userID"])){
+    $_SESSION["userID"]=session_id();
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,6 +39,18 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <!-- Core JavaScript
+    ================================================== -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/tether.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/parallax.js"></script>
+    <script src="js/animate.js"></script>
+    <script src="js/ekko-lightbox.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
   </head>
   <body id="home_page" class="home_page">     
     <!-- header -->
@@ -62,26 +80,55 @@
                 <a class="h5 fa-border btn-outline-success pull-right" style="width: 160px;margin-left: 5px;padding-right:10px;color:white;border-radius:10px;border-width:1px;" href="basket.php"><img style="width:52px;height:auto" src="images/basketv2.png" alt="#" />Sepet</a> 
               
                 <!--- Sepet Ürün Sayısı --->
-                <label id=basketQuantity CssClass="fa-border h5 fa-border btn-success pull-right" style="border-color:black;color: white;border-radius: 30px;padding: 3px 10px;position: absolute;right: 20px; top: 49px;font-weight: 300;"></label>
+                <label id=basketQuantity Class="fa-border h5 fa-border btn-success pull-right" style="display:none;border-color:black;color: white;border-radius: 30px;padding: 3px 10px;position: absolute;right: 20px; top: 49px;font-weight: 300;"></label>
+                
+                <?php echo "<input type='text' id='basketUserID' style='display:none;' value='".$_SESSION['userID']."'/>";?> 
+
+                <script>
+                  $(document).ready(function() {
+                    function checkBasket(){
+                      var userID=document.getElementById('basketUserID').value;
+                      $.ajax({
+                        url:"includes/basket.inc.php",
+                        type:"post",
+                        dataType:"json",
+                        data:{
+                          userID:userID,
+                          basketQuantity:1,
+                        },
+                        success:function(data){
+                          if(data.quantities>0){   
+                            document.getElementById('basketQuantity').style.display='block';                 
+                            document.getElementById('basketQuantity').innerHTML=data.quantities;
+                          }else{
+                            document.getElementById('basketQuantity').style.display='none';
+                          }
+                        }
+                      });
+                    }
+
+                    checkBasket();
+                  });
+                </script>
                 <!--- Sepet Ürün Sayısı --->
+
 
                 <a class="h5 fa-border btn-outline-warning pull-right" style="padding-right:10px;color:white;border-radius:10px;border-width:1px;" href="profile.php"><img style="width:52px;height:auto" src="images/profile.png" alt="#" />Hesabım</a>                      
               </div>
               <div class="col-lg-2">
                   <div class="pull-right">
                     <form method="post" action="includes/header.inc.php">
-                    <!--- Acc Giriş --->
-                    <?php 
-                      session_start();
-                      if(isset($_SESSION["userID"])){
-                        echo "<label class='h6' style='color:white;margin-right:7px;'>".$_SESSION["namesurname"]."</label>";
-                        echo "<button name='logoutBtn' type='submit' class='btn-outline-danger fa-border exitAcc'>çıkış yap.</button>";
-                      }
-                      else{
-                        echo "<a class='loginAcc' href='login.php'>Giriş Yap</a>";
-                      }
-                    ?>
-                    <!--- Acc Çıkış --->
+                      <!--- Acc Giriş --->
+                      <?php 
+                        if(isset($_SESSION["userID"])&&is_numeric($_SESSION["userID"])){
+                          echo "<label class='h6' style='color:white;margin-right:7px;'>".$_SESSION["namesurname"]."</label>";
+                          echo "<button name='logoutBtn' type='submit' class='btn-outline-danger fa-border exitAcc'>çıkış yap.</button>";
+                        }
+                        else{
+                          echo "<a class='loginAcc' href='login.php'>Giriş Yap</a>";
+                        }
+                      ?>
+                      <!--- Acc Çıkış --->
                     </form>
                   </div>
               </div>
@@ -101,22 +148,3 @@
                     <span class="float-right"><i class="fa fa-bars"></i> <i class="fa fa-close"></i></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-md-center" id="cloapediamenu">
-                      <ul class="navbar-nav">
-                          <li class="nav-item active">
-                            <a class="nav-link" href="index.php">Ana Sayfa</a>
-                          </li>
-                      </ul>
-                    </div>
-                  </nav>
-                </div>
-                <div class="search_bar">
-                  <input type="text" class="search_field" placeholder="Search" required />
-                  <button class="search_button" type="button"><i class="fa fa-search"></i></button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-    <!-- end header -->

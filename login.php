@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if(isset($_SESSION["userID"])){
+if(isset($_SESSION["userID"])&&is_numeric($_SESSION["userID"])){
 	header("location:index.php");
 	exit();
 }
